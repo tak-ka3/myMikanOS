@@ -26,13 +26,26 @@ EFI_STATUS GetMemoryMap(struct MemoryMap* map) {
 
   map->map_size = map->buffer_size;
   return gBS->GetMemoryMap(
-	&map->map_size,
-	(EFI_MEMORY_DESCRIPTOR*)map->buffer,
-	&map->map_key,
-	&map->descriptor_size,
-	&map->descriptor_version);
+      &map->map_size,
+      (EFI_MEMORY_DESCRIPTOR*)map->buffer,
+      &map->map_key,
+      &map->descriptor_size,
+      &map->descriptor_version);
 }
 // #@@range_end(get_memory_map)
+
+EFI_STATUS SaveMemoryMap(struct MemoryMap* map, EFI_FILE_PROTOCOL* file) {
+  CHAR8 buf[256];
+  UINTN len;
+
+  CHAR8* header = 
+    "Index, Type, Type(name), PhysicalStart, NumberOfPages\n";
+  len = AsciiStrlen(header);
+  file->Write(file, &len, header);
+
+  Print(L"map->buffer = %08lx, map->map_size = %08lx\n",
+      map->buffer, map->map_size);
+}
 
 
 
