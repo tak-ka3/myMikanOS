@@ -26,11 +26,11 @@ EFI_STATUS GetMemoryMap(struct MemoryMap* map) {
 
   map->map_size = map->buffer_size;
   return gBS->GetMemoryMap(
-    &map->map_size,
-    (EFI_MEMORY_DESCRIPTOR*)map->buffer,
-    &map->map_key,
-    &map->descriptor_size,
-    &map->descriptor_version);
+	&map->map_size,
+	(EFI_MEMORY_DESCRIPTOR*)map->buffer,
+	&map->map_key,
+	&map->descriptor_size,
+	&map->descriptor_version);
 }
 // #@@range_end(get_memory_map)
 
